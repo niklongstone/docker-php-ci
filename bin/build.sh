@@ -8,3 +8,4 @@ do
     :
     docker build -t niklongstone/$image docker/$image/
 done
+

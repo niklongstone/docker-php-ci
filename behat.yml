@@ -1,7 +1,0 @@
-default:
-    extensions:
-        Behat\MinkExtension\Extension:
-            base_url: http://en.wikipedia.org
-            default_session: 'selenium2'
-            selenium2: 
-                wd_host: 0.0.0.0:4444
