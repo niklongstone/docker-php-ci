@@ -1,3 +1,6 @@
-docker/*/install.sh
+docker/*/shared.sh
 vendor/
 composer.lock
+bin/
+!bin/app
+!bin/test.sh

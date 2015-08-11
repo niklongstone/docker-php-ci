@@ -4,9 +4,10 @@ default:
   extensions:
     Behat\MinkExtension\Extension:
       base_url:  'http://en.wikipedia.org/'
-      browser_name: chrome
+      selenium2:
+        browser: chrome
+        wd_host: selenium:4444
       goutte: ~
-      selenium2: ~
 
 # No context:
 no_context:
@@ -15,19 +16,3 @@ no_context:
   filters:
     tags:      '~@javascript'
 
-# Context based on inheritance:
-inheritance:
-  context:
-    class:      'InheritedFeatureContext'
-
-# Context based on traits:
-traits:
-  paths:
-    bootstrap:  'features/php54_bootstrap'
-  context:
-    class:      'TraitedFeatureContext'
-
-# Context based on subcontexting:
-subcontexts:
-  context:
-    class:      'SubcontextedFeatureContext'
