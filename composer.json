@@ -15,8 +15,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Myapp\\": "src/",
-            "Myapp\\Test\\": "tests/"
+            "Calc\\": "src/",
+            "Calc\\Test\\": "tests/"
         }
     }
 }

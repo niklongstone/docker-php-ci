@@ -1,0 +1,81 @@
+#!/bin/bash
+#: Name        : app
+#: Author      : "Nicola Pietroluongo" <nik.longstone@gmail.comm>
+#: Description : Provides automation to PHP code testing 
+
+#Custom vars
+default_images="php-5.4 php-5.5 php-5.6 php-7.0"
+selenium_image=selenium/standalone-chrome-debug:2.47.1
+docker_folder=docker
+shared_script_path=docker/shared.sh
+test_script_path=bin/test.sh
+tag_prefix=niklongstone
+
+#Default var
+script_name=${0##*/}
+: ${PHP_IMG:=$default_images}
+images=($PHP_IMG)
+
+#Prints the help
+function print_help {
+  echo "USAGE: $script_name [OPTION]"
+  echo "OPTIONS:"
+  echo "   init: initialize the repository folder"
+  echo "   build: build all the docker PHP containers"
+  echo "   selenium: run docker selenium instance"
+  echo "   test: run the testcase"
+  echo "   help: this help"
+}
+
+#Shares with every Docker container the same install.sh script
+function init {
+    echo $docker_folder/*/ | xargs -n 1 cp $shared_script_path
+    echo The install script is correctly shared
+}
+
+#Build all the Docker containers
+function build {
+    for image in "${images[@]}" 
+    do
+        docker build -t $tag_prefix/$image $docker_folder/$image/
+    done
+}
+
+#Starts the Selenium container
+function selenium {
+    docker run -d -p 4444:4444 -p 5900:5900 --name selenium $selenium_image
+    SELENIUM_IP=$(docker inspect --format='{{.NetworkSettings.IPAddress}}' selenium)
+    echo Selenium IP = $SELENIUM_IP
+}
+
+#Runs the container and trigger the test
+function run_test {
+    for image in "${images[@]}" 
+    do
+        docker run -t --rm -v $(pwd):/webapp --name test-$image \
+        --link selenium:selenium $tag_prefix/$image \
+        /webapp/$test_script_path
+    done
+}
+
+#Handles the input options
+case "$1" in
+    init)
+        init
+        ;;
+    build)
+        build
+        ;;
+    selenium)
+        selenium
+        ;;
+    test)
+        run_test
+        ;;
+    help)
+        print_help
+        ;;
+    *)
+        print_help
+        ;;    
+esac
