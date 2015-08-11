@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#images=("php-5.5" "php-5.5" "php-5.6" "php-7.0")
-images=("php-5.5")
+#images=("php-5.4" "php-5.5" "php-5.6" "php-7.0")
+images=("php-5.4")
 
 for image in "${images[@]}" 
 do
