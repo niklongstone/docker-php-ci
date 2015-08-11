@@ -4,12 +4,9 @@ default:
   extensions:
     Behat\MinkExtension\Extension:
       base_url:  'http://en.wikipedia.org/'
-      goutte:    ~
-      selenium2: 
-        wd_host: 192.168.59.103:4444
-        capabilities:
-          browser: firefox
-          version: 21
+      browser_name: chrome
+      goutte: ~
+      selenium2: ~
 
 # No context:
 no_context:

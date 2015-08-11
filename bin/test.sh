@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cd /webapp
-vendor/bin/phpunit
-bin/behat
+bin/phpunit
+env MINK_EXTENSION_PARAMS="selenium2[wd_host]=$SELENIUM_PORT" ./bin/behat
 
